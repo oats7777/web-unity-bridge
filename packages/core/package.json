@@ -1,6 +1,5 @@
 {
   "name": "@web-unity-bridge/core",
-  "private": true,
   "author": "Web Unity Bridge",
   "version": "1.0.0",
   "license": "MIT",
