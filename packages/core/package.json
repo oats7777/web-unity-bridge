@@ -1,6 +1,9 @@
 {
   "name": "@web-unity-bridge/core",
-  "author": "Web Unity Bridge",
+  "author": {
+    "name": "oats7777",
+    "email": "hanmin84200@gmail.com"
+  },
   "version": "1.0.1",
   "license": "MIT",
   "repository": {
