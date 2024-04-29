@@ -1,2 +1,3 @@
-export { CanvasMethod } from "./methods/canvas";
-export { UnityMethod } from "./methods/unity";
+import { UnityMethod } from "./methods/unity";
+
+export default UnityMethod;
