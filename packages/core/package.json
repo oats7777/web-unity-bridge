@@ -3,6 +3,11 @@
   "author": "Web Unity Bridge",
   "version": "1.0.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oats7777/web-unity-bridge",
+    "directory": "packages/core"
+  },
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
