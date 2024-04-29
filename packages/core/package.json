@@ -8,6 +8,12 @@
     "url": "https://github.com/oats7777/web-unity-bridge",
     "directory": "packages/core"
   },
+  "keywords": [
+    "typescript",
+    "Frontend",
+    "Unity",
+    "WebGL"
+  ],
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
