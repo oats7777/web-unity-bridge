@@ -1,0 +1,33 @@
+{
+  "name": "@web-unity-bridge/core",
+  "private": true,
+  "author": "Web Unity Bridge",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup --watch",
+    "test:eslint": "eslint --ext .ts,.tsx ./src"
+  },
+  "type": "module",
+  "types": "build/index.d.ts",
+  "main": "build/index.cjs",
+  "module": "build/index.js",
+  "files": [
+    "build",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./build/index.d.ts",
+        "default": "./build/index.js"
+      },
+      "require": {
+        "types": "./build/index.d.cts",
+        "default": "./build/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}
