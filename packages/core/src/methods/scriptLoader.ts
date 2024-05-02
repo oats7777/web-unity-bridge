@@ -25,7 +25,7 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
     }
 
     let script: HTMLScriptElement | null = window.document.querySelector(
-      `script[src="${this.config.loaderUrl}"]`
+      `script[src="${this.config.loaderUrl}"]`,
     );
 
     if (script === null) {
@@ -46,17 +46,17 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
       this.setStatus(
         script.getAttribute("data-status") === LOAD_STATUS.Loaded
           ? LOAD_STATUS.Loaded
-          : LOAD_STATUS.Error
+          : LOAD_STATUS.Error,
       );
     }
 
     const setStateFromEvent = (event: Event) =>
       this.setStatus(
-        event.type === "load" ? LOAD_STATUS.Loaded : LOAD_STATUS.Error
+        event.type === "load" ? LOAD_STATUS.Loaded : LOAD_STATUS.Error,
       );
     script.addEventListener("load", setStateFromEvent);
     script.addEventListener("error", setStateFromEvent);
   }
 }
 
-export { ScriptLoaderMethod };
+export { ScriptLoaderMethod, LOAD_STATUS };
