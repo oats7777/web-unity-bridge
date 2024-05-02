@@ -9,7 +9,7 @@ import { CanvasMethod } from "./canvas";
 import type { UnityInstance } from "../declarations/unity-instance";
 import type { UnityConfig } from "../types/unity-config";
 
-class UnityMethod {
+class BridgeCore {
   private scriptLoader: ScriptLoaderMethod;
   private config: UnityConfig;
   private canvasMethod: CanvasMethod;
@@ -57,4 +57,4 @@ class UnityMethod {
   }
 }
 
-export { UnityMethod };
+export { BridgeCore };

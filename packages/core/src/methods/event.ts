@@ -1,8 +1,10 @@
-import { type UnityEventParameters } from '../types/unity-event-parameters';
+import { type UnityEventParameters } from "../types/unity-event-parameters";
 
 interface EventListener {
   eventName: string;
-  callback: (...parameters: Array<UnityEventParameters>) => UnityEventParameters;
+  callback: (
+    ...parameters: Array<UnityEventParameters>
+  ) => UnityEventParameters;
 }
 
 class EventMethod {

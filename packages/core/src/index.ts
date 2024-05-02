@@ -1,3 +1,3 @@
-import { UnityMethod } from "./methods/unity";
+import { BridgeCore } from "./methods/bridgeCore";
 
-export default UnityMethod;
+export default BridgeCore;
