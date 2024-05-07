@@ -11,6 +11,7 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
     super();
     this.config = config;
     this.load = this.load.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   private setStatus(status: UnityLoaderStatus) {
@@ -56,6 +57,16 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
       );
     script.addEventListener("load", setStateFromEvent);
     script.addEventListener("error", setStateFromEvent);
+  }
+
+  public remove() {
+    const script: HTMLScriptElement | null = window.document.querySelector(
+      `script[src="${this.config.loaderUrl}"]`,
+    );
+    if (script !== null) {
+      script.remove();
+      this.setStatus(LOAD_STATUS.Idle);
+    }
   }
 }
 
