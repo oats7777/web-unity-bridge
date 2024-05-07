@@ -49,6 +49,10 @@ class EventMethod {
       );
     });
   }
+
+  destroyEventListener() {
+    this.eventListeners = [];
+  }
 }
 
 export default EventMethod;
