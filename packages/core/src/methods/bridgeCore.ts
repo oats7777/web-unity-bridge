@@ -55,6 +55,13 @@ class BridgeCore {
   private onProgress(progression: number) {
     this.progression = progression;
   }
+
+  public unmount() {
+    this.canvasMethod.unmount();
+    this.scriptLoader.remove();
+    this.event.destroyEventListener();
+    this.unityInstance?.Quit();
+  }
 }
 
 export { BridgeCore };
