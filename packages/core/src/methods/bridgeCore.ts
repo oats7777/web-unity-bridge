@@ -41,7 +41,8 @@ class BridgeCore {
     this.removeEventListener = this.event.removeEventListener;
     this.addEventListener = this.event.addEventListener;
     this.statusAddEventListener = this.statusAddEventListener.bind(this);
-    this.statusAddEventListener = this.statusRemoveEventListener.bind(this);
+    this.statusRemoveEventListener = this.statusRemoveEventListener.bind(this);
+    this.unmount = this.unmount.bind(this);
   }
 
   update(status: UnityLoaderStatus) {
@@ -59,6 +60,7 @@ class BridgeCore {
   private onProgress(progression: number) {
     this.progression = progression;
     this.statusEvent.emit("progress", progression);
+
     if (progression === 1) {
       this.statusEvent.emit("loaded", undefined);
     }
