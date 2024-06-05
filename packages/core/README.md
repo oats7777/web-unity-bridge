@@ -51,11 +51,11 @@ const bridgeCore = new BridgeCore(unityContainer, unityConfig);
 Add event listeners to handle custom events or loading progress.
 
 ```javascript
-bridgeCore.addEventListener("loaded", () => {
+bridgeCore.statusAddEventListener("loaded", () => {
   console.log("Unity loaded successfully!");
 });
 
-bridgeCore.addEventListener("progress", (progress) => {
+bridgeCore.statusAddEventListener("progress", (progress) => {
   console.log(`Loading progress: ${progress}%`);
 });
 ```
