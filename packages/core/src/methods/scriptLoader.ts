@@ -10,16 +10,14 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
   constructor(config: UnityConfig) {
     super();
     this.config = config;
-    this.load = this.load.bind(this);
-    this.remove = this.remove.bind(this);
   }
 
-  private setStatus(status: UnityLoaderStatus) {
+  private setStatus = (status: UnityLoaderStatus) => {
     this.status = status;
     this.notifyObservers(status);
-  }
+  };
 
-  public async load() {
+  public load = async () => {
     if (!this.config.loaderUrl) {
       this.setStatus(LOAD_STATUS.Idle);
       return;
@@ -57,9 +55,9 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
       );
     script.addEventListener("load", setStateFromEvent);
     script.addEventListener("error", setStateFromEvent);
-  }
+  };
 
-  public remove() {
+  public remove = () => {
     const script: HTMLScriptElement | null = window.document.querySelector(
       `script[src="${this.config.loaderUrl}"]`,
     );
@@ -67,7 +65,7 @@ class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
       script.remove();
       this.setStatus(LOAD_STATUS.Idle);
     }
-  }
+  };
 }
 
 export { ScriptLoaderMethod, LOAD_STATUS };

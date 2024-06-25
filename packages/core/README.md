@@ -71,6 +71,30 @@ function startGame() {
 }
 ```
 
+### 5. Communication from Unity to Javascript
+
+To dispatch events, the module provides a global function called `dispatchUnityWebGLEvent`. This function accepts the event name and parameters as arguments, and it will dispatch the event to the appropriate Unity context.
+
+```javascript
+  bridgeCore.addEventListener('SetScore', (score) => {
+    console.log(score)
+  });
+```
+
+Example: Dispatching an event from a JSLib
+
+```javascript
+mergeInto(LibraryManager.library, {
+  SetScore: function (score) {
+    try {
+      window.dispatchUnityWebGLEvent("SetScore", score);
+    } catch (e) {
+      console.warn("Failed to dispatch event");
+    }
+  },
+});
+```
+
 ## Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests on our GitHub repository.
