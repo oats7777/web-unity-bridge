@@ -11,17 +11,13 @@ class EventMethod {
   private eventListeners: Array<EventListener> = [];
 
   constructor() {
-    this.addEventListener = this.addEventListener.bind(this);
-    this.removeEventListener = this.removeEventListener.bind(this);
-    this.dispatchUnityWebGLEvent = this.dispatchUnityWebGLEvent.bind(this);
-
     window.dispatchUnityWebGLEvent = this.dispatchUnityWebGLEvent;
   }
 
-  private dispatchUnityWebGLEvent(
+  private dispatchUnityWebGLEvent = (
     eventName: string,
     ...parameters: Array<UnityEventParameters>
-  ) {
+  ) => {
     let returnValue: UnityEventParameters = undefined;
     this.eventListeners.forEach((eventListener) => {
       if (eventListener.eventName === eventName) {
@@ -29,9 +25,9 @@ class EventMethod {
       }
     });
     return returnValue;
-  }
+  };
 
-  addEventListener({ eventName, callback }: EventListener) {
+  addEventListener = ({ eventName, callback }: EventListener) => {
     this.eventListeners = [
       ...this.eventListeners,
       {
@@ -39,20 +35,20 @@ class EventMethod {
         callback,
       },
     ];
-  }
+  };
 
-  removeEventListener({ eventName, callback }: EventListener) {
+  removeEventListener = ({ eventName, callback }: EventListener) => {
     this.eventListeners.filter((eventListener) => {
       return (
         eventListener.eventName !== eventName &&
         eventListener.callback !== callback
       );
     });
-  }
+  };
 
-  destroyEventListener() {
+  destroyEventListener = () => {
     this.eventListeners = [];
-  }
+  };
 }
 
 export default EventMethod;

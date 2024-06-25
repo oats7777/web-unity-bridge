@@ -36,57 +36,53 @@ class BridgeCore {
     this.scriptLoader.subscribe(this); // Add 'this' as an argument
     this.scriptLoader.load();
     this.canvasMethod = new CanvasMethod(root);
-    this.loadUnity = this.loadUnity.bind(this);
-    this.onProgress = this.onProgress.bind(this);
+
     this.removeEventListener = this.event.removeEventListener;
     this.addEventListener = this.event.addEventListener;
-    this.statusAddEventListener = this.statusAddEventListener.bind(this);
-    this.statusRemoveEventListener = this.statusRemoveEventListener.bind(this);
-    this.unmount = this.unmount.bind(this);
   }
 
   update(status: UnityLoaderStatus) {
     if (status === "Loaded") this.loadUnity();
   }
 
-  private async loadUnity() {
+  private loadUnity = async () => {
     this.unityInstance = await window.createUnityInstance(
       this.canvasMethod.canvas,
       this.config,
       this.onProgress,
     );
-  }
+  };
 
-  private onProgress(progression: number) {
+  private onProgress = (progression: number) => {
     this.progression = progression;
     this.statusEvent.emit("progress", progression);
 
     if (progression === 1) {
       this.statusEvent.emit("loaded", undefined);
     }
-  }
+  };
 
-  public statusAddEventListener<T extends keyof StatusEventMap>(
+  public statusAddEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
     callback: (arg: StatusEventMap[T]) => void,
-  ) {
+  ) => {
     this.statusEvent.addEventListener(eventName, callback);
-  }
+  };
 
-  public statusRemoveEventListener<T extends keyof StatusEventMap>(
+  public statusRemoveEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
     callback: (arg: StatusEventMap[T]) => void,
-  ) {
+  ) => {
     this.statusEvent.removeEventListener(eventName, callback);
-  }
+  };
 
-  public unmount() {
+  public unmount = () => {
     this.canvasMethod.unmount();
     this.scriptLoader.remove();
     this.event.destroyEventListener();
     this.statusEvent.destroyEventListener();
     this.unityInstance?.Quit();
-  }
+  };
 }
 
 export { BridgeCore };

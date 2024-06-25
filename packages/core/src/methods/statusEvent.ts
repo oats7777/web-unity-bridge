@@ -13,45 +13,44 @@ interface StatusEventListener<T = any> {
 class StatusEvent {
   private eventListeners: Array<StatusEventListener<any>> = [];
 
-  constructor() {
-    this.addEventListener = this.addEventListener.bind(this);
-    this.removeEventListener = this.removeEventListener.bind(this);
-    this.emit = this.emit.bind(this);
-  }
+  constructor() {}
 
-  addEventListener<T extends keyof StatusEventMap>(
+  addEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
     callback: StatusEventCallback<StatusEventMap[T]>,
-  ) {
+  ) => {
     this.eventListeners.push({
       eventName,
       callback,
     });
-  }
+  };
 
-  removeEventListener<T extends keyof StatusEventMap>(
+  removeEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
     callback: StatusEventCallback<StatusEventMap[T]>,
-  ) {
+  ) => {
     this.eventListeners = this.eventListeners.filter((eventListener) => {
       return (
         eventListener.eventName !== eventName ||
         eventListener.callback !== callback
       );
     });
-  }
+  };
 
-  emit<T extends keyof StatusEventMap>(eventName: T, arg: StatusEventMap[T]) {
+  emit = <T extends keyof StatusEventMap>(
+    eventName: T,
+    arg: StatusEventMap[T],
+  ) => {
     this.eventListeners.forEach((eventListener) => {
       if (eventListener.eventName === eventName) {
         eventListener.callback(arg);
       }
     });
-  }
+  };
 
-  destroyEventListener() {
+  destroyEventListener = () => {
     this.eventListeners = [];
-  }
+  };
 }
 
 export { StatusEvent, type StatusEventMap };
