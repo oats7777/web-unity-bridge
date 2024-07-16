@@ -3,6 +3,7 @@ import {
   type UnityLoaderStatus,
 } from "../config/unity-loader-status";
 import { isBrowserEnvironment } from "../utils/browser";
+
 import EventMethod from "./event";
 import { ScriptLoaderMethod } from "./scriptLoader";
 import { CanvasMethod } from "./canvas";
@@ -13,9 +14,10 @@ import type { UnityConfig } from "../types/unity-config";
 class BridgeCore {
   private scriptLoader: ScriptLoaderMethod;
   private config: UnityConfig;
-  private canvasMethod: CanvasMethod;
+  private canvasMethod: CanvasMethod | null = null;
   private event: EventMethod;
   private statusEvent: StatusEvent; // Use StatusEvent
+  private root: HTMLElement | HTMLCanvasElement | OffscreenCanvas;
 
   public status: UnityLoaderStatus = LOAD_STATUS.Loading;
   public progression = 0;
@@ -23,19 +25,25 @@ class BridgeCore {
   public removeEventListener: EventMethod["removeEventListener"];
   public addEventListener: EventMethod["addEventListener"];
 
-  constructor(root: HTMLElement, config: UnityConfig) {
+  constructor(
+    root: HTMLElement | HTMLCanvasElement | OffscreenCanvas,
+    config: UnityConfig,
+  ) {
     if (isBrowserEnvironment !== true) {
       throw new Error(
         "This method can only be used in the browser environment",
       );
     }
+    this.root = root;
     this.config = config;
     this.event = new EventMethod();
     this.scriptLoader = new ScriptLoaderMethod(config);
     this.statusEvent = new StatusEvent(); // Initialize StatusEvent
     this.scriptLoader.subscribe(this); // Add 'this' as an argument
     this.scriptLoader.load();
-    this.canvasMethod = new CanvasMethod(root);
+    if (this.root instanceof HTMLElement) {
+      this.canvasMethod = new CanvasMethod(this.root);
+    }
 
     this.removeEventListener = this.event.removeEventListener;
     this.addEventListener = this.event.addEventListener;
@@ -47,7 +55,7 @@ class BridgeCore {
 
   private loadUnity = async () => {
     this.unityInstance = await window.createUnityInstance(
-      this.canvasMethod.canvas,
+      this.canvasMethod?.canvas ?? (this.root as HTMLCanvasElement),
       this.config,
       this.onProgress,
     );
@@ -77,7 +85,7 @@ class BridgeCore {
   };
 
   public unmount = () => {
-    this.canvasMethod.unmount();
+    this.canvasMethod?.unmount();
     this.scriptLoader.remove();
     this.event.destroyEventListener();
     this.statusEvent.destroyEventListener();
