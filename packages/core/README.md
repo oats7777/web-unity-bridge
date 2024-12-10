@@ -76,8 +76,11 @@ function startGame() {
 To dispatch events, the module provides a global function called `dispatchUnityWebGLEvent`. This function accepts the event name and parameters as arguments, and it will dispatch the event to the appropriate Unity context.
 
 ```javascript
-  bridgeCore.addEventListener('SetScore', (score) => {
-    console.log(score)
+  bridge.addEventListener({
+    eventName: 'SetScore',
+    callback: (score) => {
+      console.log('SetScore>>', score);
+    },
   });
 ```
 
