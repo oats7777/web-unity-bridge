@@ -49,9 +49,9 @@ class BridgeCore {
     this.addEventListener = this.event.addEventListener;
   }
 
-  update(status: UnityLoaderStatus) {
+  update = (status: UnityLoaderStatus) => {
     if (status === "Loaded") this.loadUnity();
-  }
+  };
 
   private loadUnity = async () => {
     this.unityInstance = await window.createUnityInstance(
