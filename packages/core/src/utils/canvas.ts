@@ -4,7 +4,7 @@ interface ResizeCanvasParameters {
 }
 
 export const createCanvas = () => {
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement('canvas');
   return { canvas };
 };
 
@@ -24,8 +24,8 @@ export const createCanvas = () => {
  */
 export const resizeCanvas = ({ entry, canvas }: ResizeCanvasParameters) => {
   const { width, height } = entry.contentRect;
-  canvas.style.width = "100%";
-  canvas.style.height = "100%";
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
   const ratio = window.devicePixelRatio > 1 ? 2 : 1;
   canvas.width = width * ratio;
   canvas.height = height * ratio;

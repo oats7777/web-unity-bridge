@@ -1,6 +1,6 @@
-import { createCanvas, resizeCanvas } from "../utils/canvas";
+import { createCanvas, resizeCanvas } from '../utils/canvas';
 
-const unityCanvasIdPrefix = "unity-webgl-canvas";
+const unityCanvasIdPrefix = 'unity-webgl-canvas';
 
 class CanvasMethod {
   private resizeObserver;

@@ -1,5 +1,5 @@
-import { BridgeCore } from "./methods/bridgeCore";
-import type { UnityInstance } from "./declarations/unity-instance";
+import type { UnityInstance } from './declarations/unity-instance';
+import { BridgeCore } from './methods/bridgeCore';
 
 export type { UnityInstance };
 

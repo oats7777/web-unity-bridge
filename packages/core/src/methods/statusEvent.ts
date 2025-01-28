@@ -13,11 +13,9 @@ interface StatusEventListener<T = any> {
 class StatusEvent {
   private eventListeners: Array<StatusEventListener<any>> = [];
 
-  constructor() {}
-
   addEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
-    callback: StatusEventCallback<StatusEventMap[T]>,
+    callback: StatusEventCallback<StatusEventMap[T]>
   ) => {
     this.eventListeners.push({
       eventName,
@@ -27,21 +25,15 @@ class StatusEvent {
 
   removeEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
-    callback: StatusEventCallback<StatusEventMap[T]>,
+    callback: StatusEventCallback<StatusEventMap[T]>
   ) => {
-    this.eventListeners = this.eventListeners.filter((eventListener) => {
-      return (
-        eventListener.eventName !== eventName ||
-        eventListener.callback !== callback
-      );
+    this.eventListeners = this.eventListeners.filter(eventListener => {
+      return eventListener.eventName !== eventName || eventListener.callback !== callback;
     });
   };
 
-  emit = <T extends keyof StatusEventMap>(
-    eventName: T,
-    arg: StatusEventMap[T],
-  ) => {
-    this.eventListeners.forEach((eventListener) => {
+  emit = <T extends keyof StatusEventMap>(eventName: T, arg: StatusEventMap[T]) => {
+    this.eventListeners.forEach(eventListener => {
       if (eventListener.eventName === eventName) {
         eventListener.callback(arg);
       }

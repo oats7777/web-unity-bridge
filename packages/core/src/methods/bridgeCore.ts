@@ -1,15 +1,11 @@
-import {
-  LOAD_STATUS,
-  type UnityLoaderStatus,
-} from "../config/unity-loader-status";
-import { isBrowserEnvironment } from "../utils/browser";
-
-import EventMethod from "./event";
-import { ScriptLoaderMethod } from "./scriptLoader";
-import { CanvasMethod } from "./canvas";
-import { StatusEvent, type StatusEventMap } from "./statusEvent";
-import type { UnityInstance } from "../declarations/unity-instance";
-import type { UnityConfig } from "../types/unity-config";
+import { CanvasMethod } from './canvas';
+import EventMethod from './event';
+import { ScriptLoaderMethod } from './scriptLoader';
+import { StatusEvent, type StatusEventMap } from './statusEvent';
+import { LOAD_STATUS, type UnityLoaderStatus } from '../config/unity-loader-status';
+import type { UnityInstance } from '../declarations/unity-instance';
+import type { UnityConfig } from '../types/unity-config';
+import { isBrowserEnvironment } from '../utils/browser';
 
 class BridgeCore {
   private scriptLoader: ScriptLoaderMethod;
@@ -22,17 +18,12 @@ class BridgeCore {
   public status: UnityLoaderStatus = LOAD_STATUS.Loading;
   public progression = 0;
   public unityInstance: UnityInstance | null = null;
-  public removeEventListener: EventMethod["removeEventListener"];
-  public addEventListener: EventMethod["addEventListener"];
+  public removeEventListener: EventMethod['removeEventListener'];
+  public addEventListener: EventMethod['addEventListener'];
 
-  constructor(
-    root: HTMLElement | HTMLCanvasElement | OffscreenCanvas,
-    config: UnityConfig,
-  ) {
+  constructor(root: HTMLElement | HTMLCanvasElement | OffscreenCanvas, config: UnityConfig) {
     if (isBrowserEnvironment !== true) {
-      throw new Error(
-        "This method can only be used in the browser environment",
-      );
+      throw new Error('This method can only be used in the browser environment');
     }
     this.root = root;
     this.config = config;
@@ -50,36 +41,36 @@ class BridgeCore {
   }
 
   update = (status: UnityLoaderStatus) => {
-    if (status === "Loaded") this.loadUnity();
+    if (status === 'Loaded') this.loadUnity();
   };
 
   private loadUnity = async () => {
     this.unityInstance = await window.createUnityInstance(
       this.canvasMethod?.canvas ?? (this.root as HTMLCanvasElement),
       this.config,
-      this.onProgress,
+      this.onProgress
     );
   };
 
   private onProgress = (progression: number) => {
     this.progression = progression;
-    this.statusEvent.emit("progress", progression);
+    this.statusEvent.emit('progress', progression);
 
     if (progression === 1) {
-      this.statusEvent.emit("loaded", undefined);
+      this.statusEvent.emit('loaded', undefined);
     }
   };
 
   public statusAddEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
-    callback: (arg: StatusEventMap[T]) => void,
+    callback: (arg: StatusEventMap[T]) => void
   ) => {
     this.statusEvent.addEventListener(eventName, callback);
   };
 
   public statusRemoveEventListener = <T extends keyof StatusEventMap>(
     eventName: T,
-    callback: (arg: StatusEventMap[T]) => void,
+    callback: (arg: StatusEventMap[T]) => void
   ) => {
     this.statusEvent.removeEventListener(eventName, callback);
   };

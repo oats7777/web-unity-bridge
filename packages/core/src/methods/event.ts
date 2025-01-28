@@ -1,10 +1,8 @@
-import { type UnityEventParameters } from "../types/unity-event-parameters";
+import { type UnityEventParameters } from '../types/unity-event-parameters';
 
 interface EventListener {
   eventName: string;
-  callback: (
-    ...parameters: Array<UnityEventParameters>
-  ) => UnityEventParameters;
+  callback: (...parameters: Array<UnityEventParameters>) => UnityEventParameters;
 }
 
 class EventMethod {
@@ -14,12 +12,9 @@ class EventMethod {
     window.dispatchUnityWebGLEvent = this.dispatchUnityWebGLEvent;
   }
 
-  private dispatchUnityWebGLEvent = (
-    eventName: string,
-    ...parameters: Array<UnityEventParameters>
-  ) => {
+  private dispatchUnityWebGLEvent = (eventName: string, ...parameters: Array<UnityEventParameters>) => {
     let returnValue: UnityEventParameters = undefined;
-    this.eventListeners.forEach((eventListener) => {
+    this.eventListeners.forEach(eventListener => {
       if (eventListener.eventName === eventName) {
         returnValue = eventListener.callback(...parameters);
       }
@@ -38,11 +33,8 @@ class EventMethod {
   };
 
   removeEventListener = ({ eventName, callback }: EventListener) => {
-    this.eventListeners.filter((eventListener) => {
-      return (
-        eventListener.eventName !== eventName &&
-        eventListener.callback !== callback
-      );
+    this.eventListeners.filter(eventListener => {
+      return eventListener.eventName !== eventName && eventListener.callback !== callback;
     });
   };
 

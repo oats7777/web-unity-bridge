@@ -1,4 +1,4 @@
-import { type UnityEventParameters } from "../types/unity-event-parameters";
+import { type UnityEventParameters } from '../types/unity-event-parameters';
 
 declare class UnityInstance {
   constructor();
@@ -9,11 +9,7 @@ declare class UnityInstance {
    * @param methodName the name of the public method on the game object.
    * @param parameter an optional parameter to pass along to the method.
    */
-  public SendMessage(
-    gameObjectName: string,
-    methodName: string,
-    parameter?: UnityEventParameters,
-  ): void;
+  public SendMessage(gameObjectName: string, methodName: string, parameter?: UnityEventParameters): void;
 
   /**
    * Enables or disabled the fullscreen mode of the UnityInstance.

@@ -40,3 +40,7 @@ stats.html
 .svelte-kit
 .tsup
 .vinxi
+
+
+
+.nx/workspace-data
