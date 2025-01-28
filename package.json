@@ -20,7 +20,6 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "globals": "^15.14.0",
-    "nx": "20.3.2",
     "prettier": "^3.2.5",
     "rollup": "^4.31.0",
     "rollup-plugin-dts": "^6.1.1",
