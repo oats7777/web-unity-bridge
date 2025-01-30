@@ -7,4 +7,5 @@ interface UnityArguments {
   readonly productVersion?: string;
   readonly streamingAssetsUrl?: string;
 }
+
 export type { UnityArguments };

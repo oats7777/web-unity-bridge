@@ -1,10 +1,11 @@
 {
   "name": "@web-unity-bridge/core",
+  "private": true,
   "author": {
     "name": "oats7777",
     "email": "hanmin84200@gmail.com"
   },
-  "version": "1.0.10",
+  "version": "1.1.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,8 +19,7 @@
     "WebGL"
   ],
   "scripts": {
-    "build": "tsup",
-    "watch": "tsup --watch",
+    "build": "rollup -c",
     "test:eslint": "eslint --ext .ts,.tsx ./src"
   },
   "type": "module",
@@ -30,17 +30,15 @@
     "build",
     "src"
   ],
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "browser": "./dist/browser.global.js"
+  },
   "exports": {
-    ".": {
-      "import": {
-        "types": "./build/index.d.ts",
-        "default": "./build/index.js"
-      },
-      "require": {
-        "types": "./build/index.d.cts",
-        "default": "./build/index.cjs"
-      }
-    },
+    ".": "./src/index.ts",
     "./package.json": "./package.json"
   }
 }

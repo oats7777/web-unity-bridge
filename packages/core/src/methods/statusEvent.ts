@@ -3,54 +3,41 @@ type StatusEventMap = {
   loaded: void;
 };
 
-type StatusEventCallback<T = any> = (arg: T) => void;
+type EventCallback<T extends keyof StatusEventMap> = (args: StatusEventMap[T]) => void;
 
-interface StatusEventListener<T = any> {
-  eventName: keyof StatusEventMap;
-  callback: StatusEventCallback<T>;
-}
+class StatusEventMethod {
+  private events: {
+    eventName: keyof StatusEventMap;
+    callback: EventCallback<keyof StatusEventMap>;
+  }[] = [];
 
-class StatusEvent {
-  private eventListeners: Array<StatusEventListener<any>> = [];
+  addEventListener = <T extends keyof StatusEventMap>(eventName: T, callback: EventCallback<T>) => {
+    if (this.events.some(event => event.eventName === eventName && event.callback === callback)) {
+      return;
+    }
 
-  constructor() {}
-
-  addEventListener = <T extends keyof StatusEventMap>(
-    eventName: T,
-    callback: StatusEventCallback<StatusEventMap[T]>,
-  ) => {
-    this.eventListeners.push({
+    this.events.push({
       eventName,
-      callback,
+      callback: callback as EventCallback<keyof StatusEventMap>,
     });
   };
 
-  removeEventListener = <T extends keyof StatusEventMap>(
-    eventName: T,
-    callback: StatusEventCallback<StatusEventMap[T]>,
-  ) => {
-    this.eventListeners = this.eventListeners.filter((eventListener) => {
-      return (
-        eventListener.eventName !== eventName ||
-        eventListener.callback !== callback
-      );
-    });
+  removeEventListener = <T extends keyof StatusEventMap>(eventName: T, callback: EventCallback<T>) => {
+    this.events = this.events.filter(event => event.eventName !== eventName || event.callback !== callback);
   };
 
-  emit = <T extends keyof StatusEventMap>(
-    eventName: T,
-    arg: StatusEventMap[T],
-  ) => {
-    this.eventListeners.forEach((eventListener) => {
-      if (eventListener.eventName === eventName) {
-        eventListener.callback(arg);
+  emit = <T extends keyof StatusEventMap>(eventName: T, arg: StatusEventMap[T]) => {
+    this.events.forEach(event => {
+      if (event.eventName === eventName) {
+        event.callback(arg);
       }
     });
   };
 
   destroyEventListener = () => {
-    this.eventListeners = [];
+    this.events = [];
   };
 }
 
-export { StatusEvent, type StatusEventMap };
+export { StatusEventMethod };
+export type { StatusEventMap, EventCallback };
