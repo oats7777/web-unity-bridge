@@ -1,4 +1,4 @@
-import { createCanvas, resizeCanvas } from '../utils/canvas';
+import { createCanvas, resizeCanvas } from '@/utils/canvas';
 
 const unityCanvasIdPrefix = 'unity-webgl-canvas';
 

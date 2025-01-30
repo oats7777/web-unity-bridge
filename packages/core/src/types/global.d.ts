@@ -1,6 +1,6 @@
-import type { UnityInstance } from './unity-instance';
-import type { UnityArguments } from '../types/unity-arguments';
-import type { UnityEventParameters } from '../types/unity-event-parameters';
+import type { UnityArguments } from './types/unity-arguments';
+import type { UnityEventParameters } from './types/unity-event-parameters';
+import type { UnityInstance } from './types/unity-instance';
 
 declare global {
   /**

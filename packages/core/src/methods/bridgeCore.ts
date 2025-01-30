@@ -1,18 +1,18 @@
-import { CanvasMethod } from './canvas';
-import EventMethod from './event';
-import { ScriptLoaderMethod } from './scriptLoader';
-import { StatusEvent, type StatusEventMap } from './statusEvent';
-import { LOAD_STATUS, type UnityLoaderStatus } from '../config/unity-loader-status';
-import type { UnityInstance } from '../declarations/unity-instance';
-import type { UnityConfig } from '../types/unity-config';
-import { isBrowserEnvironment } from '../utils/browser';
+import { LOAD_STATUS, type UnityLoaderStatus } from '@/config/unity-loader-status';
+import { CanvasMethod } from '@/methods/canvas';
+import EventMethod from '@/methods/event';
+import { ScriptLoaderMethod } from '@/methods/scriptLoader';
+import { EventCallback, StatusEventMap, StatusEventMethod } from '@/methods/statusEvent';
+import type { UnityConfig } from '@/types/unity-config';
+import type { UnityInstance } from '@/types/unity-instance';
+import { isBrowserEnvironment } from '@/utils/browser';
 
 class BridgeCore {
   private scriptLoader: ScriptLoaderMethod;
   private config: UnityConfig;
   private canvasMethod: CanvasMethod | null = null;
   private event: EventMethod;
-  private statusEvent: StatusEvent; // Use StatusEvent
+  private statusEvent: StatusEventMethod;
   private root: HTMLElement | HTMLCanvasElement | OffscreenCanvas;
 
   public status: UnityLoaderStatus = LOAD_STATUS.Loading;
@@ -29,7 +29,7 @@ class BridgeCore {
     this.config = config;
     this.event = new EventMethod();
     this.scriptLoader = new ScriptLoaderMethod(config);
-    this.statusEvent = new StatusEvent(); // Initialize StatusEvent
+    this.statusEvent = new StatusEventMethod();
     this.scriptLoader.subscribe(this); // Add 'this' as an argument
     this.scriptLoader.load();
     if (this.root instanceof HTMLElement) {
@@ -61,10 +61,7 @@ class BridgeCore {
     }
   };
 
-  public statusAddEventListener = <T extends keyof StatusEventMap>(
-    eventName: T,
-    callback: (arg: StatusEventMap[T]) => void
-  ) => {
+  public statusAddEventListener = <T extends keyof StatusEventMap>(eventName: T, callback: EventCallback<T>) => {
     this.statusEvent.addEventListener(eventName, callback);
   };
 

@@ -1,4 +1,5 @@
-import { type UnityEventParameters } from '../types/unity-event-parameters';
+import { UnityBooleanLike } from './unity-boolean-like';
+import { type UnityEventParameters } from './unity-event-parameters';
 
 declare class UnityInstance {
   constructor();

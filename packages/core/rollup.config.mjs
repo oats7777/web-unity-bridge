@@ -3,6 +3,7 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dtsPlugin from 'rollup-plugin-dts';
+import alias from '@rollup/plugin-alias';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
@@ -107,6 +108,9 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
           declaration: false,
         },
       }),
+      alias({
+        entries: [{ find: /^@\/(.+)/, replacement: join(__dirname, 'src/$1') }],
+      }),
     ],
     output: {
       format,
@@ -130,7 +134,12 @@ function libBuildOptions({ entrypoints, extension, format, outDir, sourcemap }) 
  */
 function declarationOptions({ entrypoints, outDir }) {
   return {
-    plugins: [dtsPlugin()],
+    plugins: [
+      alias({
+        entries: [{ find: /^@\/(.+)/, replacement: join(__dirname, 'src/$1') }],
+      }),
+      dtsPlugin(),
+    ],
     input: mapInputs(entrypoints),
     output: [
       {

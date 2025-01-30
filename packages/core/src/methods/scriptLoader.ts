@@ -1,7 +1,7 @@
-import { Observable } from './observable';
-import { LOAD_STATUS } from '../config/unity-loader-status';
-import type { UnityLoaderStatus } from '../config/unity-loader-status';
-import type { UnityConfig } from '../types/unity-config';
+import { LOAD_STATUS } from '@/config/unity-loader-status';
+import type { UnityLoaderStatus } from '@/config/unity-loader-status';
+import { Observable } from '@/methods/observable';
+import type { UnityConfig } from '@/types/unity-config';
 
 class ScriptLoaderMethod extends Observable<UnityLoaderStatus> {
   public status: UnityLoaderStatus = LOAD_STATUS.Loading;
