@@ -17,7 +17,7 @@ class Observable<T> {
   };
 
   protected notifyObservers = (data: T) => {
-    this.observers.forEach((observer) => observer.update(data));
+    this.observers.forEach(observer => observer.update(data));
   };
 }
 

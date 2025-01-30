@@ -1,6 +1,6 @@
-import type { UnityEventParameters } from '../types/unity-event-parameters';
-import type { UnityInstance } from './unity-instance';
-import type { UnityArguments } from '../types/unity-arguments';
+import type { UnityArguments } from './types/unity-arguments';
+import type { UnityEventParameters } from './types/unity-event-parameters';
+import type { UnityInstance } from './types/unity-instance';
 
 declare global {
   /**
@@ -16,10 +16,7 @@ declare global {
     onProgress?: (progression: number) => void
   ): Promise<UnityInstance>;
 
-  function dispatchUnityWebGLEvent(
-    eventName: string,
-    ...parameters: Array<UnityEventParameters>
-  );
+  function dispatchUnityWebGLEvent(eventName: string, ...parameters: Array<UnityEventParameters>);
 
   interface Window {
     createUnityInstance: typeof createUnityInstance;
