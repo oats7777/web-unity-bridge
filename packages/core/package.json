@@ -4,7 +4,7 @@
     "name": "oats7777",
     "email": "hanmin84200@gmail.com"
   },
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
     "test:eslint": "eslint --ext .ts,.tsx ./src"
   },
   "files": [
-    "build",
-    "src"
+    "dist",
+    "*.d.ts"
   ],
   "publishConfig": {
     "access": "public",
